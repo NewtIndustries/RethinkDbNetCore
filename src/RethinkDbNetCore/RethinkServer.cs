@@ -17,6 +17,10 @@ namespace RethinkDbNetCore
                 .Port(RethinkDBConstants.DefaultPort)
                 .Timeout(60)
                 .Connect();
+	    var obj = new { X = 0, Y = 1, Z = 2 };
+	    // var result = RethinkDB.R.Db("test").TableCreate("vectors").Run(_connection);
+	    var result = RethinkDB.R.Db("test").Table("vectors").Insert(obj).Run(_connection);
+	    Console.WriteLine(result.ToString());
         }
     }
 }
