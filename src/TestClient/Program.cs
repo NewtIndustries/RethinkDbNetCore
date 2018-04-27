@@ -8,6 +8,7 @@ namespace TestClient
         static void Main(string[] args)
         {
             // var client = new RethinkClient();
+            var server = new RethinkServer();
         }
     }
 }
