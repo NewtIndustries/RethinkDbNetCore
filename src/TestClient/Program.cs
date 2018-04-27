@@ -9,6 +9,7 @@ namespace TestClient
         {
             // var client = new RethinkClient();
             var server = new RethinkServer();
+            Console.WriteLine("SERVER CREATED");
         }
     }
 }
