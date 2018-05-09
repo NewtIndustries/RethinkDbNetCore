@@ -18,12 +18,14 @@ namespace RethinkDbNetCore
         private bool _active;
         public RethinkServer()
         {
+            AppDomain.CurrentDomain.ProcessExit += (sender, args) => { _tcpListener?.Stop(); };
+            
             _connection = RethinkDB.R.Connection()
                 .Hostname("localhost")
                 .Port(RethinkDBConstants.DefaultPort)
                 .Timeout(60)
                 .Connect();
-            IPAddress address = IPAddress.Parse("127.0.0.1");
+            IPAddress address = IPAddress.Parse("0.0.0.0");
             _tcpListener = new TcpListener(address, 4242);
             _tcpListener.Start();
             _active = true;
@@ -32,6 +34,8 @@ namespace RethinkDbNetCore
             //// var result = RethinkDB.R.Db("test").TableCreate("vectors").Run(_connection);
             //var result = RethinkDB.R.Db("test").Table("vectors").Insert(obj).Run(_connection);
             //Console.WriteLine(result.ToString());
+
+            
         }
 
         private async Task Listen()
@@ -43,8 +47,11 @@ namespace RethinkDbNetCore
                     Console.WriteLine("Waiting for client...");
                     var client = await _tcpListener.AcceptTcpClientAsync();
                     if (client != null)
-                    {
+                    { 
                         Console.WriteLine($"Client Connected From {client.Client.RemoteEndPoint.ToString()}");
+                        var stream = client.GetStream();
+                        var msg = System.Text.Encoding.UTF8.GetBytes("Hello World");
+                        await stream.WriteAsync(msg, 0, msg.Length);
                     }
                 }
             }
