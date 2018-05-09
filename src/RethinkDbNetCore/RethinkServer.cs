@@ -5,6 +5,7 @@ using System.Data;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using RethinkDb.Driver;
 
 namespace RethinkDbNetCore
@@ -26,25 +27,24 @@ namespace RethinkDbNetCore
             _tcpListener = new TcpListener(address, 4242);
             _tcpListener.Start();
             _active = true;
-            Listen();
+            Listen().Wait();
             //var obj = new { X = 0, Y = 1, Z = 2 };
             //// var result = RethinkDB.R.Db("test").TableCreate("vectors").Run(_connection);
             //var result = RethinkDB.R.Db("test").Table("vectors").Insert(obj).Run(_connection);
             //Console.WriteLine(result.ToString());
         }
 
-        private void Listen()
+        private async Task Listen()
         {
             if (_tcpListener != null && _active)
             {
                 while (true)
                 {
                     Console.WriteLine("Waiting for client...");
-                    var clientTask = _tcpListener.AcceptTcpClientAsync();
-                    if (clientTask.Result != null)
+                    var client = await _tcpListener.AcceptTcpClientAsync();
+                    if (client != null)
                     {
-                        Console.WriteLine("Client connected.  Waiting for data");
-
+                        Console.WriteLine($"Client Connected From {client.Client.RemoteEndPoint.ToString()}");
                     }
                 }
             }
