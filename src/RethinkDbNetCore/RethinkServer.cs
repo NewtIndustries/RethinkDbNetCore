@@ -14,7 +14,7 @@ namespace RethinkDbNetCore
 
     // netstat -nlp|grep 9000
     // https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example
-
+    // https://github.com/Eastrall/Ether.Network
     public class RethinkServer
     {
         private Connection _connection;
