@@ -11,6 +11,10 @@ using RethinkDb.Driver;
 namespace RethinkDbNetCore
 {
     // https://www.c-sharpcorner.com/article/building-a-tcp-server-in-net-core-on-ubuntu/
+
+    // netstat -nlp|grep 9000
+    // https://docs.microsoft.com/en-us/dotnet/framework/network-programming/asynchronous-server-socket-example
+
     public class RethinkServer
     {
         private Connection _connection;

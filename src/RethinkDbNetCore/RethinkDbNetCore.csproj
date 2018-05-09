@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="RethinkClient.cs.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="RethinkClient.cs.bak" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="RethinkDb.Driver.Linq" Version="2.3.23" />
   </ItemGroup>
 
